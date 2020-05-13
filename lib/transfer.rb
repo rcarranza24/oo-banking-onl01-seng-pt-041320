@@ -8,11 +8,11 @@ class Transfer
     @status = "pending"
   end
 
-   def valid?
-    @sender.valid? && @receiver.valid? ? true : false
-  end
+   def both_valid?
+     sender.valid? && receiver.valid? ? true : false
+   end
 
-   def execute_transaction 
+    def execute_transaction 
      if both_valid? && status == "pending"
        if amount < self.sender.balance
          self.sender.balance -= amount
@@ -28,11 +28,12 @@ class Transfer
      end
    end
 
-  def reverse_transfer
-    if @status == "complete"
-       @sender.balance += @amount
-       @receiver.balance -= @amount
-       @status = "reversed"
-    end
-  end
-end
+    def reverse_transfer
+     if self.status == "complete"
+       self.sender.balance += amount
+       self.receiver.balance -= amount
+       self.status = "reversed"
+     end
+   end
+ end 		
+ end 
